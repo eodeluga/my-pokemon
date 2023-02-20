@@ -3,6 +3,7 @@ FROM node:16
 # Set app home directory
 WORKDIR /home/app
 COPY *.json *.js ./
+COPY ./prisma ./prisma
 COPY ./public ./public
 COPY ./src ./src
 

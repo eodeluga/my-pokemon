@@ -4,7 +4,9 @@ import { useRouter } from "next/router"
 //import { MenuIcon, SearchIcon, ShoppingCartIcon,} from "@heroicons/react/outline"
 
 function Header() {
-  const router = useRouter();    
+  const router = useRouter();
+  const db = process.env.POSTGRES_DB
+  console.log(db);
   return (
     <header>
       {/* Top nav */}

@@ -5,7 +5,7 @@ services:
     image: postgres
     restart: unless-stopped
     env_file:
-      - .env
+      - .env.local
     ports:
       - "5432:5432"
     container_name: db
@@ -18,12 +18,18 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     image: node:16
+    env_file:
+      - .env.local
     networks:
       - node
     ports:
       - "3000:3000"
     container_name: node
-    command: bash -c 'npm install && npm run build && npm start'
+    command: bash -c 'npm install && \
+      npm run seed && \
+      npm run generate && \
+      npm run build && \
+      npm start'
     depends_on:
       - db
       

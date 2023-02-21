@@ -5,6 +5,7 @@
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import catchemService from "@/services/catchem";
 
 type Response = {
   status?: number;
@@ -24,7 +25,8 @@ export default function handler(
 
       const status = data.status;
       const body = await data.text();
-      res.status(status).send({ msg: body });
+      //service.insertCsv(body)
+      catchemService
     })
     .catch((err) => {
       // Error response

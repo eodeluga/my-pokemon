@@ -22,6 +22,7 @@ sudo -u postgres psql -c 'create database pokemon;'
 ````
 npm install
 npm run seed
+npm run generate
 npm run build
 npm start
 ````

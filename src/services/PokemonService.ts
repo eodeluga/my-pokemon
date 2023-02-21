@@ -20,7 +20,6 @@ export type PokemonService = {
 };
 
 /** Output a task status message with optional status message
- * @constructor
  * @param {boolean} isAllGood - Boolean representing whether status is ok or not
  * @param {string} msg - Optional status message
  */
@@ -34,7 +33,6 @@ export default function service(db: PrismaClient): PokemonService {
   return {
     
     /** Creates multiple database records from an array
-     * @constructor
      * @param {Pokemon []} pokemon - An array of Pokemon objects
      * @returns {Promise<void>} - Promise of void type
      */

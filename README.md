@@ -1,16 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# My Pokemon
+This is a little web application that presents Pokemon as cards and allows you to filter them by height and weight
 
 ## Getting Started
 
 ### Running using Docker
-If you have Docker (with Docker Compose) installed, simply enter the following
+If you have Docker (with Docker Compose) installed on your system, simply enter the following in the project root folder
 ````
 docker-compose up
 ````
 You can now access the application using this url in your browser 
 [http://localhost:3000](http://localhost:3000)
 
-### Running using shell
+### Running using shell (manual setup)
 This will require that PostgreSQL is installed, and the user name and password in .env file will need to be changed to match your environment
 
 1. First create the database required by the application

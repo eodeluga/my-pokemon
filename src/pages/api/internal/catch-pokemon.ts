@@ -4,7 +4,6 @@ import service, { Pokemon } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
 
 /** Creates and returns a Pokemon object by parsing CSV line values 
- * @constructor
  * @param {string} csvLine - Line of text representing a CSV record
  * @returns {Pokemon} - A Pokemon object representation of the CSV
 */

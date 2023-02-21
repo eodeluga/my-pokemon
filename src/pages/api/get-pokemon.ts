@@ -40,13 +40,13 @@ export default function handler(
       // Split the text at line breaks to create CSV record array
       const csvArr = (await data.text()).split("\n");
       
-      // Skip first line as its the CSV header row
-      for (let i = 1; i < csvArr.length; i++) {
+      // Skip first element as its the CSV header row and last as some bad data
+      for (let i = 1; i < csvArr.length - 1; i++) {
         pokemonArr.push(
           parsePokemonCsv(csvArr[i])
-        )
+        );
       }
-      
+            
       // Initiate service with database client
       const pokemonService = service(prismaClient);
 

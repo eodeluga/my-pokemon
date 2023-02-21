@@ -1,8 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { object, string, number, date, InferType } from "yup";
-
-import service, { SearchParams, Pokemon, PokemonService } from "@/services/PokemonService";
+import { object, number } from "yup";
+import service, { Pokemon } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
 
 type Response = {

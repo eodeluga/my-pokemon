@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import service, { Pokemon } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
 
@@ -30,7 +30,6 @@ type Response = {
 };
 
 export default function handler(
-  req: NextApiRequest,
   res: NextApiResponse<Response>
 ) {
   // Get list of Pokemon

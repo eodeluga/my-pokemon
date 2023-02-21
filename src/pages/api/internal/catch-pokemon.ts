@@ -3,8 +3,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import service, { Pokemon } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
 
-// Returns a Pokemon object from parsed CSV values
-const parsePokemonCsv = (csvLine: string): Pokemon => {
+/** Creates and returns a Pokemon object by parsing CSV line values 
+ * @constructor
+ * @param {string} csvLine - Line of text representing a CSV record
+ * @returns {Pokemon} - A Pokemon object representation of the CSV
+*/
+const parseCsvLine = (csvLine: string): Pokemon => {
   // Split lines at commas to get CSV values and destructure
   // required values into variables
   const [id, name, , height, weight, , ,] = csvLine.split(",");
@@ -22,7 +26,7 @@ const parsePokemonCsv = (csvLine: string): Pokemon => {
 };
 
 type Response = {
-  status?: number;
+  status: number;
   msg: string;
 };
 
@@ -43,7 +47,7 @@ export default function handler(
       // Skip first element as its the CSV header row and last as some bad data
       for (let i = 1; i < csvArr.length - 1; i++) {
         pokemonArr.push(
-          parsePokemonCsv(csvArr[i])
+          parseCsvLine(csvArr[i])
         );
       }
             
@@ -54,7 +58,10 @@ export default function handler(
       await pokemonService.createMany(pokemonArr)
       
       // Success
-      res.status(data.status).send({msg: data.statusText.toString()});
+      res.status(data.status).send({
+        status: data.status,
+        msg: data.statusText.toString()
+      });
     })
     .catch((err) => {
       // Error response

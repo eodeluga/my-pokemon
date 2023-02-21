@@ -15,8 +15,14 @@ export type Pokemon = {
   artwork_url: string;
 };
 
+export type SearchParams = {
+  height: number | undefined;
+  weight: number | undefined;
+};
+
 export type PokemonService = {
-  createMany: (pokemon: Pokemon[]) => Promise<void>;
+  createMany: (pokemon: Pokemon []) => Promise<void>;
+  findMany: (searchParams: SearchParams) => Promise<Pokemon []>;
 };
 
 /** Output a task status message with optional status message
@@ -29,7 +35,6 @@ const statusLog = (isAllGood: boolean, msg?: string) => {
 };
 
 export default function service(db: PrismaClient): PokemonService {
-  
   return {
     
     /** Creates multiple database records from an array
@@ -49,6 +54,29 @@ export default function service(db: PrismaClient): PokemonService {
           good,
           `All Pokemon caught and stored in database 😀:\n${createdPokemon}`
         );
+      } catch (e) {
+        statusLog(bad, `${e}\nOh...`);
+        throw "PokemonService: Database error";
+      }
+    },
+    
+    /** Returns found Pokemon matching search parameters
+     * @param {SearchParams} searchParams - The search criteria for finding Pokemon
+     * @returns {Promise<Pokemon []>} - An array of Pokemon objects
+     */
+    async findMany(searchParams: SearchParams): Promise<Pokemon[]> {
+      try {
+        const foundPokemon = await db.pokemon.findMany({
+          where: {
+            height: {
+              gte: searchParams.height,
+            },
+            weight: {
+              gte: searchParams.weight,
+            },
+          },
+        });
+        return foundPokemon;
       } catch (e) {
         statusLog(bad, `${e}\nOh...`);
         throw "PokemonService: Database error";

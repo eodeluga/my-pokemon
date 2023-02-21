@@ -2,18 +2,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { object, string, number, date, InferType } from "yup";
 
-import service, { Pokemon } from "@/services/PokemonService";
+import service, { SearchParams, Pokemon, PokemonService } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
 
 type Response = {
   status: number;
-  params?: SearchParams
+  pokemon?: Pokemon[] | []
   msg: string;
-};
-
-type SearchParams = {
-  height: number | undefined;
-  weight: number | undefined;
 };
 
 export default async function handler(
@@ -27,15 +22,16 @@ export default async function handler(
   });
 
   try {
-    // Destructure successfully validated parameters from request query
+    // Destructure parameters on successfull validation of request query
     const { height, weight } = await searchSchema.validate(req.query);
     // Success
+    // Initiate service with database client
+    const pokemonService = service(prismaClient);
+    const pokemon = await pokemonService.findMany({height, weight})
+    console.log(pokemon);
     res.status(200).send({
       status: 200,
-      params: {
-        height: height,
-        weight: weight,
-      },
+      pokemon: pokemon,
       msg: 'OK',
     });
   } catch {

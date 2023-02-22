@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "env-cmd prisma migrate dev --name init",
-    "generate": "env-cmd prisma generate"
+    "docker-seed": "prisma migrate dev --name init",
+    "generate": "env-cmd prisma generate",
+    "docker-generate": "prisma generate"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.52.0",
@@ -29,6 +31,7 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-spinners": "^0.13.8",
     "typescript": "4.9.5",
     "yup": "^1.0.0"
   }

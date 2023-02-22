@@ -1,7 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import service, { Pokemon } from "@/services/PokemonService";
 import { prismaClient } from "@/services/db";
+import { object } from "yup";
+import statusLog from "@/services/logger";
 
 /** Creates and returns a Pokemon object by parsing CSV line values 
  * @param {string} csvLine - Line of text representing a CSV record
@@ -30,10 +32,11 @@ type Response = {
 };
 
 export default function handler(
-  res: NextApiResponse<Response>
+    req: NextApiRequest,
+    res: NextApiResponse<Response>
 ) {
   // Get list of Pokemon
-  fetch("https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/pokemon.csv")
+  return fetch("https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/pokemon.csv")
     .then(async (data) => {
       // Throw object to catch block if errors
       if (!data.ok) throw data;
@@ -55,17 +58,18 @@ export default function handler(
       // Insert pokemon into database
       await pokemonService.createMany(pokemonArr)
       
-      // Success
-      res.status(data.status).send({
+      // Success 
+      res.send({
         status: data.status,
-        msg: data.statusText.toString()
+        msg: data.statusText
       });
     })
     .catch((err) => {
       // Error response
-      res.status(500).send({
-        status: 500,
-        msg: err,
+      statusLog(false, `catch-pokemon: Couldn't download Pokemon data\n${JSON.stringify(err)}\nOh...`);
+      res.send ({
+        status: err?.status,
+        msg: err?.statusText,
       });
     });
 }

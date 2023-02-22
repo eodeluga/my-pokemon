@@ -2,9 +2,10 @@
  * This service module is the API interface with the Pokemon database
  */
 import { PrismaClient } from "@prisma/client";
+import statusLog, { GOOD, BAD} from "./logger";
 
-const good = true;
-const bad = false;
+const good:GOOD = true;
+const bad:BAD = false;
 
 export type Pokemon = {
   // Optional id is automatically generated if not supplied
@@ -25,14 +26,7 @@ export type PokemonService = {
   findMany: (searchParams: SearchParams) => Promise<Pokemon []>;
 };
 
-/** Output a task status message with optional status message
- * @param {boolean} isAllGood - Boolean representing whether status is ok or not
- * @param {string} msg - Optional status message
- */
-const statusLog = (isAllGood: boolean, msg?: string) => {
-  const status = isAllGood ? "✓\n" : "💩\n";
-  console.log(`${msg ? `${msg} ${status}` : status}`);
-};
+
 
 export default function service(db: PrismaClient): PokemonService {
   return {
@@ -52,7 +46,7 @@ export default function service(db: PrismaClient): PokemonService {
 
         statusLog(
           good,
-          `All Pokemon caught and stored in database 😀:\n${createdPokemon}`
+          `All Pokemon caught and stored in database 😀:\n${JSON.stringify(createdPokemon, null, 4)}`
         );
       } catch (e) {
         statusLog(bad, `${e}\nOh...`);

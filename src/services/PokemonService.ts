@@ -16,8 +16,8 @@ export type Pokemon = {
 };
 
 export type SearchParams = {
-  height: number | undefined;
-  weight: number | undefined;
+  height?: number | undefined;
+  weight?: number | undefined;
 };
 
 export type PokemonService = {
@@ -69,7 +69,7 @@ export default function service(db: PrismaClient): PokemonService {
         const foundPokemon = await db.pokemon.findMany({
           where: {
             height: {
-              gte: searchParams.height,
+              gte: searchParams.height === 0 ? 1 : searchParams.height,
             },
             weight: {
               gte: searchParams.weight,

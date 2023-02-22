@@ -1,12 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from "next/router"
-//import { MenuIcon, SearchIcon, ShoppingCartIcon,} from "@heroicons/react/outline"
+import  Filter from './Filter';
 
 function Header() {
   const router = useRouter();
-  const db = process.env.POSTGRES_DB
-  console.log(db);
+  
   return (
     <header>
       {/* Top nav */}
@@ -21,17 +20,10 @@ function Header() {
             alt="banner"
           />
         </div>
-        {/* Search */}
-        <div className="hidden sm:flex itemss-center h-10 rounded-md flex-grow">
-          <input className="p-2 h-full w-96 flex-shrink rounded-l-md focus:outline-none bg-red-300 placeholder-slate-800"
-            type="text"
-            placeholder='Search ability rating'
-            
-          />
-          {/*<SearchIcon className="h-12 p-4" />*/}
-        </div>
-        
-      </div>
+        </div>          
+         
+          
+          
     </header>
   )
 }

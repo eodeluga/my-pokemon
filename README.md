@@ -1,5 +1,5 @@
 # My Pokemon
-This is a little web application that presents Pokemon as cards and allows you to filter them by height and weight
+This is a little web application that uses Next.js, Prisma and PostgreSQL, that presents Pokemon as cards and allows you to filter them by height and weight.
 
 ## Getting Started
 
